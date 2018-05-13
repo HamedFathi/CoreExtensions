@@ -3388,5 +3388,37 @@ namespace CoreExtensions
                 catch { return null; }
             }
         }
+
+        public static string ReplaceAt(this string text, char target, string replace, ReplaceMode replaceMode = ReplaceMode.On)
+        {
+            var i = text.IndexOf(target);
+            if (i > -1)
+            {
+                var part1 = text.Substring(0, i);
+                var part2 = text.Substring(i + 1);
+                switch (replaceMode)
+                {
+                    case ReplaceMode.On:
+                        return part1 + replace + part2;
+                    case ReplaceMode.Before:
+                        return part1 + replace + target + part2;
+                    case ReplaceMode.After:
+                        return part1 + target + replace + part2;
+                }
+                return text;
+            }
+            else
+            {
+                return text;
+            }
+
+        }
+    }
+
+    public enum ReplaceMode
+    {
+        On,
+        Before,
+        After
     }
 }
